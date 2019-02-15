@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+		<style>
+
+		.box_title {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.box_description {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.btn-info {
+			background-color: #2C3E50;
+			border-color: #2C3E50;
+			margin-top: 0.5rem;
+		}
+
+		hr {
+			border-top: 10px solid #2C3E50;
+			font-size: 1rem;
+		}
+
+	</style>
+    {% endblock %}
+
+{% block body %}
+
+    {% for quizz in dataQuizz %}
+
+    <div class="row justify-content-center">
+    	<div class="box_title">
+    		<h2>{{ quizz.title }}</h2>
+    	</div>
+    </div>
+
+	<div class=" row box_image justify-content-center">
+    	<img style="width: 350px; height: 150px" src="{{ quizz.image }}" alt="{{ quizz.title }}">
+    </div>
+
+    <div class="box_description row justify-content-center">
+    	<h3>{{ quizz.description }}</h3>
+    </div>
+
+    <div class="row justify-content-center">
+    	<a class="quizz_button btn btn-info" href="{{ path('quizz', {'id': quizz.id}) }}">Faire le Quizz</a>
+    </div>
+    
+        <hr>
+
+    {% endfor %}
+
+{% endblock %}

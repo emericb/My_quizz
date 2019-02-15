@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    <style>
+
+    html, body {
+        margin: 0;
+        height: 100%;
+        background: linear-gradient(to right bottom, #1b1b1e, #333);
+    }
+
+    .message {
+        margin-top: 3rem;
+        color: white;
+    }
+
+    .card {
+        background-color: transparent;
+        border: 2px solid #2C3E50;
+    }
+
+    .card-header {
+        background-color: #2C3E50;
+        color: white;
+    }
+
+    .btn-success {
+        margin-top: 2rem;
+        background-color: #2C3E50;
+        border-color: #2C3E50;
+    }
+
+    .container {
+        margin-top: 5rem;
+    }
+
+    .list {
+        flex: 0 0 20rem;
+        list-style: none;
+    }
+
+    .list__item {
+        position: relative;
+    }
+    .list__item:hover > .label {
+        color: #19B18F;
+    }
+    .list__item:hover > .label::before {
+        border: 0.5rem solid #19B18F;
+        margin-right: 2rem;
+    }
+
+    .radio-btn {
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .radio-btn:checked + .label {
+        color: #19B18F;
+    }
+    .radio-btn:checked + .label::before {
+        margin-right: 2rem;
+        border: 0.5rem solid #19B18F;
+        background: #fff;
+    }
+
+    .label {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 0;
+        color: white;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s linear;
+    }
+
+    .label::before {
+        display: inline-block;
+        content: "";
+        height: 1.125rem;
+        width: 1.125rem;
+        margin-right: 0.625rem;
+        border: 0.5rem solid #fff;
+        border-radius: 50%;
+        transition: all 0.25s linear;
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+{% if rep == null %}
+
+<div class="card">
+    <h5 class="card-header">{{ quizz.questions[compteur].question }}</h5>
+    <div class="card-body">
+
+        <form method="post">
+
+            <ul class="list">
+
+                {% for reponses in quizz.questions[compteur].reponses|shuffle%}
+
+                    <li class="list__item">
+                        <input name="next" value="{{ compteur }}" hidden>
+                        <input name="bonneRep" value="{{ bonneRep }}" hidden>
+                        <input type="radio" class="radio-btn" name="answer" id="{{ reponses.id }}" value="{{ reponses.id }}"/>
+                        <label for="{{ reponses.id }}" class="label">{{ reponses.reponse }}</label>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+                <div class="row justify-content-center">
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+
+            {% else %}
+
+
+                {% if yes == true %}
+
+                    <div class="row justify-content-center">
+                        <img src='https://nsm09.casimages.com/img/2018/12/07//{{ random(good)}}' class="image" alt='omega'/>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <h5 class="message">{{ message }}</h5>
+                    </div>
+
+                {% else %}
+
+                {% for reponses in quizz.questions[compteur].reponses %}
+                
+                    {% if reponses.reponseExpected == 1 %}
+
+                        <div class="row justify-content-center">
+                            <img src='https://nsm09.casimages.com/img/2018/12/07//{{ random(bad)}}' class="image" alt='facepalm'/>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <h5 class="message">la bonne réponse est : {{ reponses.reponse }}</h5>
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+                {% endif %}
+
+            <div class="row justify-content-center">
+                <form method="post">
+                    <input name="next" value="{{ compteur }}" hidden>
+                    <input name="bonneRep" value="{{ bonneRep }}" hidden>
+                    <button type="submit" class="btn btn-success" >Question suivante</button>
+                </form>
+            </div>
+
+            {% endif %}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

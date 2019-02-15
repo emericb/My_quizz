@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+
+    {{ include('quiz/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('profil_show', {'id' : app.user.id}) }}">retour au profil</a>
+
+    {{ include('quiz/_delete_form.html.twig') }}
+{% endblock %}
