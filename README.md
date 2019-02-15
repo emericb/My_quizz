@@ -1,2 +1,2 @@
 # My_quizz
-Quizz website using Symphony 4 &amp; twig
+Quizz website using Symfony 4 &amp; twig
